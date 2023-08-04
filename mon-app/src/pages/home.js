@@ -1,8 +1,8 @@
 import React from "react";
-import Features from "../../front/components/features";
-import Footer from "../../front/components/footer";
-import Header from "../../front/components/Header";
-import Hero from "../../front/components/hero";
+import Features from "../components/features";
+import Footer from "../components/footer";
+import Header from "../components/Header";
+import Hero from "../components/hero";
 
 function Home() {
   document.title = "Argent Bank - Home Page";

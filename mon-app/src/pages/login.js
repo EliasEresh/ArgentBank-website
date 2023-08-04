@@ -1,7 +1,7 @@
 import React from "react";
-import Footer from "../../front/components/footer";
-import Header from "../../front/components/Header";
-import SignIn from "../../front/components/form";
+import Footer from "../components/footer";
+import Header from "../components/Header";
+import SignIn from "../components/form";
 
 function Login() {
   document.title = "Argent Bank - Sign In";

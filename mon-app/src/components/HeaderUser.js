@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../redux/actions/user.actions";
+import { updateUser } from "../redux/action";
 
 function HeaderUser() {
   const user = useSelector((state) => state.userReducer.user);

@@ -1,7 +1,7 @@
-import Footer from "../../front/components/footer";
-import HeaderUser from "../../front/components/HeaderUser";
-import Header from "../../front/components/Header";
-import Accounts from "../../front/components/accountccount";
+import Footer from "../components/footer";
+import HeaderUser from "../components/HeaderUser";
+import Header from "../components/Header";
+import Accounts from "../components/account";
 
 function Profile() {
   document.title = "Argent Bank - Account";

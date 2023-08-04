@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/actions/userActions';
+import { useDispatch, /*useSelector*/ } from 'react-redux';
+import { login } from '../redux/action';
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -8,7 +8,7 @@ function SignIn() {
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
-  const status = useSelector(state => state.status);
+  //const status = useSelector(state => state.status);
 
   const handleSubmit = (e) => {
     e.preventDefault();
