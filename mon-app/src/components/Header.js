@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../redux/userSlice';
+import ArgentBankLogo from '../assets/img/argentBankLogo.png';
 
 function Header() {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ function Header() {
     <header>
       <nav className='main-nav'>
         <Link to="/" className='main-nav-logo'>
-          <img src="../assets/argentBankLogo.png" alt="Argent Bank Logo" className='main-nav-logo-image' />
+          <img src={ArgentBankLogo} alt="Argent Bank Logo" className='main-nav-logo-image' />
         </Link>
         {isAuthenticated ? (
           <div className="main-nav-user">
