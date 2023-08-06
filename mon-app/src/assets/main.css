@@ -45,10 +45,21 @@ body {
 .main-nav a {
   font-weight: bold;
   color: #2c3e50;
+  display: flex;
+  align-items: center;
+}
+
+.fa {
+  margin-right: 5px;
 }
 
 .main-nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.main-nav-user {
+  display: flex;
+  justify-content: space-between;
 }
 
 .main-nav-item {

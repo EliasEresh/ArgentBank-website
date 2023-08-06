@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch, /*useSelector*/ } from 'react-redux';
-import { login } from '../redux/action';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../redux/userSlice'; // Use loginUser instead of login
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -8,14 +8,13 @@ function SignIn() {
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
-  //const status = useSelector(state => state.status);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email.trim() === '' || password.trim() === '') {
       setError(true);
     } else {
-      dispatch(login(email, password));
+      dispatch(loginUser({ firstName: 'John' })); // Dispatch loginUser instead of login
     }
   };
 

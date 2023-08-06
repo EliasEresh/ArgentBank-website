@@ -6,7 +6,7 @@ import store from './store';
 import Home from './pages/home';
 import Login from './pages/login'; 
 import Profile from './pages/user';
-import './assets/main.css';
+import '../src/assets/main.css';
 
 const App = () => {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../redux/action';
+import { logoutUser } from '../redux/userSlice';
 
 function Header() {
   const dispatch = useDispatch();
@@ -14,23 +14,23 @@ function Header() {
 
   return (
     <header>
-      <nav>
-        <Link to="/">
-          <img src="../assets/argentBankLogo.png" alt="Argent Bank Logo" />
+      <nav className='main-nav'>
+        <Link to="/" className='main-nav-logo'>
+          <img src="../assets/argentBankLogo.png" alt="Argent Bank Logo" className='main-nav-logo-image' />
         </Link>
         {isAuthenticated ? (
-          <div className="connected">
-            <Link to="/profile">
+          <div className="main-nav-user">
+            <Link to="/profile" className="main-nav-item">
               <i className="fa fa-user-circle" />
               <p> {firstName} </p>
             </Link>
-            <Link to="/" onClick={handleLogout}>
+            <Link to="/" onClick={handleLogout} className="main-nav-item">
               <i className="fa fa-sign-out" />
               <p> Sign Out </p>
             </Link>
           </div>
         ) : (
-          <Link to="/login" className="notConnected">
+          <Link to="/login" className="main-nav-item">
             <i className="fa fa-user-circle" />
             <p> Sign In </p>
           </Link>
