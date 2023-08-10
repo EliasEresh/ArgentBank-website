@@ -4,6 +4,7 @@ import { updateUser } from "../redux/action";
 
 function HeaderUser() {
   const user = useSelector((state) => state.userReducer.user);
+  const token = useSelector((state) => state.userReducer.token); // Va chercher le token dans le store
   const [editName, setEditName] = useState(false);
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
@@ -14,11 +15,11 @@ function HeaderUser() {
     if (firstName === "" && lastName === "") {
       setEditName(!editName);
     } else {
-      dispatch(updateUser(firstName, lastName));
+      dispatch(updateUser({ token, firstName, lastName })); // Met le token dans le updateUser
       setEditName(!editName);
     }
-  };
-
+  }
+  
   const cancel = (e) => {
     e.preventDefault();
     setEditName(false);

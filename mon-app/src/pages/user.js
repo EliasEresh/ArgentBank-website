@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Accounts from "../components/account";
 
 function Profile() {
+  console.log('Profile component rendered');
   document.title = "Argent Bank - Account";
   return (
     <div>

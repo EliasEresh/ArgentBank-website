@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../redux/userSlice'; // Use loginUser instead of login
+import { login, Profile } from '../redux/action';
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -9,12 +9,19 @@ function SignIn() {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (email.trim() === '' || password.trim() === '') {
       setError(true);
     } else {
-      dispatch(loginUser({ firstName: 'John' })); // Dispatch loginUser instead of login
+      // Dispatch loginUser action avec email et password
+      const loginData = await dispatch(login({ email, password, token: '' }));
+      
+      // Quand login réussit, fetch user profile information
+      if (loginData.payload && loginData.payload.token) {
+        const token = loginData.payload.token;
+        dispatch(Profile(token));
+      }
     }
   };
 
