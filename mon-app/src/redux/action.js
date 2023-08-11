@@ -4,6 +4,7 @@
 // logout
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { logoutUser } from './userSlice';
 
 export const login = createAsyncThunk('user/login', async (credentials) => {
     try {
@@ -23,6 +24,7 @@ export const login = createAsyncThunk('user/login', async (credentials) => {
       }
   
       const data = await response.json();
+      console.log ('data', data)
       return data;
     } catch (error) {
       throw error;
@@ -46,6 +48,7 @@ export const Profile = createAsyncThunk('user/Profile', async (token) => {
     }
 
     const data = await response.json();
+    console.log ('data profile', data)
     return data;
   } catch (error) {
     throw error;
@@ -75,13 +78,8 @@ export const updateUser = createAsyncThunk('user/updateUser', async ({ token, fi
 });
 
 export const logOut = () => {
-    localStorage.clear();
-    return (dispatch) => {
-      dispatch({
-        type: 'user/logoutUser', // Utiliser le bon type pour le logout (à vérifier)
-        payload: "",
-      });
-      window.location = "/";
-    };
+  return (dispatch) => {
+    dispatch(logoutUser()); // Dispatch your logout action
+    window.location = "/"; // Redirect to the desired URL
   };
-  
+};

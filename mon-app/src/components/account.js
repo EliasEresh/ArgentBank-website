@@ -40,14 +40,14 @@ function Accounts() {
 
 function Compte({ titre, montant, description }) {
   return (
-    <section className="compte">
-      <div>
-        <h3>{titre}</h3>
-        <p className="compte-montant">{montant}</p>
-        <p className="compte-description">{description}</p>
+    <section className="account">
+      <div className='account-content-wrapper'>
+        <h3 className="account-title">{titre}</h3>
+        <p className="account-amount">{montant}</p>
+        <p className="account-amount-description">{description}</p>
       </div>
-      <div className="cta">
-        <button>View transactions</button>
+      <div className="account-content-wrapper cta">
+        <button className="transaction-button" >View transactions</button>
       </div>
     </section>
   );

@@ -7,8 +7,8 @@ const initialState = {
   token: '',
   status: 'void',
   user: {
-    prenom: '',
-    nom: '',
+    firstName: '',
+    lastName: '',
   },
 };
 
@@ -28,19 +28,19 @@ const userSlice = createSlice({
       .addCase(Profile.fulfilled, (state, action) => {
         state.connected = true;
         state.status = 'connecte';
-        state.user.prenom = action.payload.body.firstName;
-        state.user.nom = action.payload.body.lastName;
+        state.user.firstName = action.payload.body.firstName;
+        state.user.lastName = action.payload.body.lastName;
       })
       .addCase(updateUserProfile.fulfilled, (state, action) => {
-        state.user.prenom = action.payload.body.firstName;
-        state.user.nom = action.payload.body.lastName;
+        state.user.firstName = action.payload.body.firstName;
+        state.user.lastName = action.payload.body.lastName;
       })
       .addCase(logoutUser, (state) => {
         state.connected = false;
         state.token = '';
         state.status = 'void';
-        state.user.prenom = '';
-        state.user.nom = '';
+        state.user.firstName = '';
+        state.user.lastName = '';
       });
   },
 });

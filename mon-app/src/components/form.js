@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login, Profile } from '../redux/action';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -8,6 +9,7 @@ function SignIn() {
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,11 +18,12 @@ function SignIn() {
     } else {
       // Dispatch loginUser action avec email et password
       const loginData = await dispatch(login({ email, password, token: '' }));
-      
+
       // Quand login réussit, fetch user profile information
       if (loginData.payload && loginData.payload.token) {
         const token = loginData.payload.token;
         dispatch(Profile(token));
+        navigate('/profile'); // Redirect to profile page
       }
     }
   };

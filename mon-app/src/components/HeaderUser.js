@@ -3,40 +3,43 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../redux/action";
 
 function HeaderUser() {
-  const user = useSelector((state) => state.userReducer.user);
-  const token = useSelector((state) => state.userReducer.token); // Va chercher le token dans le store
-  const [editName, setEditName] = useState(false);
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
+  const userState = useSelector((state) => state.user); // Access the user state from userSlice
   const dispatch = useDispatch();
+
+  const [editName, setEditName] = useState(false);
+  const [firstName, setFirstName] = useState(userState.firstName);
+  const [lastName, setLastName] = useState(userState.lastName);
+
+  const token = userState.token;
 
   const changeName = (e) => {
     e.preventDefault();
     if (firstName === "" && lastName === "") {
       setEditName(!editName);
     } else {
-      dispatch(updateUser({ token, firstName, lastName })); // Met le token dans le updateUser
+      dispatch(updateUser({ token, firstName, lastName }));
       setEditName(!editName);
     }
   }
-  
+
   const cancel = (e) => {
     e.preventDefault();
     setEditName(false);
-    setFirstName(user.firstName);
-    setLastName(user.lastName);
+    setFirstName(userState.firstName);
+    setLastName(userState.lastName);
   };
 
   return (
     <div className="header">
       <h1>
-        Welcome back
-        <br />
-        <span className={editName ? "sr-only" : " "}>
-          {user.firstName} {user.lastName} !
-        </span>
+        Welcome back<br />
+        {userState.isAuthenticated && (
+          <span className={editName ? "sr-only" : " "}>
+            {firstName} {lastName} !
+          </span>
+        )}
       </h1>
-      {!editName && (
+      {!editName && userState.isAuthenticated && (
         <button
           className="edit-button"
           onClick={() => setEditName(!editName)}
@@ -44,7 +47,7 @@ function HeaderUser() {
           Edit Name
         </button>
       )}
-      {editName && (
+      {editName && userState.isAuthenticated && (
         <form className="edit-profile">
           <div className="edit-firstName">
             <input
