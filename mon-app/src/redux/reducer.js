@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+/*import { createSlice } from '@reduxjs/toolkit';
 import { login, Profile, updateUserProfile, logoutUser } from './action';
 import { loginUser } from './userSlice'; // Vérifier que loginUser est bien dans UserSlice.js
 
@@ -45,4 +45,4 @@ const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
+export default userSlice.reducer;*/

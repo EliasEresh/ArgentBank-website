@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login, Profile } from '../redux/action';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -9,21 +9,33 @@ function SignIn() {
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(false); // Reset error state
+
     if (email.trim() === '' || password.trim() === '') {
-      setError(true);
+      setError(true); // Display error message
     } else {
-      // Dispatch loginUser action avec email et password
+      // Dispatch loginUser action with email and password
       const loginData = await dispatch(login({ email, password, token: '' }));
 
-      // Quand login réussit, fetch user profile information
-      if (loginData.payload && loginData.payload.token) {
-        const token = loginData.payload.token;
-        dispatch(Profile(token));
-        navigate('/profile'); // Redirect to profile page
+      // Assuming loginData.success indicates successful login
+      if (loginData.success) {
+        const token = loginData.token; // Assuming loginData includes the token
+        // Fetch user profile information
+        const profileData = await dispatch(Profile(token));
+        
+        console.log('profileData success:', profileData.success);
+
+        if (profileData.success) {
+          navigate('/profile'); // Redirect to profile page
+        } else {
+          setError(true); // Handle failure to fetch profile data
+        }
+      } else {
+        setError(true); // Handle login failure here
       }
     }
   };

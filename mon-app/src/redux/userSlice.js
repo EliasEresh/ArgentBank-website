@@ -1,49 +1,46 @@
 import { createSlice } from '@reduxjs/toolkit';
-import * as userActions from './action';
+import { login, Profile, updateUser } from './action';
+
+const initialState = {
+  isAuthenticated: false,
+  token: '',
+  firstName: '',
+  lastName: '',
+  connected: false,
+  status: 'void',
+};
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    isAuthenticated: false,
-    firstName: '',
-    lastName: '',
-  },
+  initialState,
   reducers: {
-    loginUser: (state, action) => {
-      state.isAuthenticated = true;
-      state.firstName = action.payload.firstName;
-      state.lastName = action.payload.lastName;
-    },
     logoutUser: (state) => {
       state.isAuthenticated = false;
+      state.token = '';
       state.firstName = '';
       state.lastName = '';
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(userActions.login.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action) => {
         state.isAuthenticated = true;
+        state.token = action.payload.body.token;
+        state.status = 'connexion';
+        // Use the navigate function to redirect to the profile page
+      })
+      .addCase(Profile.fulfilled, (state, action) => {
+        state.connected = true;
+        state.status = 'connecte';
         state.firstName = action.payload.body.firstName;
         state.lastName = action.payload.body.lastName;
       })
-      .addCase(userActions.Profile.fulfilled, (state, action) => {
-        state.isAuthenticated = true;
+      .addCase(updateUser.fulfilled, (state, action) => {
         state.firstName = action.payload.body.firstName;
         state.lastName = action.payload.body.lastName;
-      })
-      .addCase(userActions.updateUser.fulfilled, (state, action) => {
-        state.firstName = action.payload.body.firstName;
-        state.lastName = action.payload.body.lastName;
-      })
-      // Mettre la fonction ici au lieu de l'action ?
-      .addCase(userActions.logOut, (state) => {
-        state.isAuthenticated = false;
-        state.firstName = '';
-        state.lastName = '';
       });
   },
 });
 
-export const { loginUser, logoutUser } = userSlice.actions;
+export const { logoutUser } = userSlice.actions;
 export default userSlice.reducer;

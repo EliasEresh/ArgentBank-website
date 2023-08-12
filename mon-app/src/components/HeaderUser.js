@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../redux/action";
 
@@ -7,10 +7,15 @@ function HeaderUser() {
   const dispatch = useDispatch();
 
   const [editName, setEditName] = useState(false);
-  const [firstName, setFirstName] = useState(userState.firstName);
-  const [lastName, setLastName] = useState(userState.lastName);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
   const token = userState.token;
+
+  useEffect(() => {
+    setFirstName(userState.firstName);
+    setLastName(userState.lastName);
+  }, [userState.firstName, userState.lastName]);
 
   const changeName = (e) => {
     e.preventDefault();
@@ -53,7 +58,7 @@ function HeaderUser() {
             <input
               type="text"
               value={firstName}
-              placeholder="First name"
+              placeholder="Username"
               onChange={(e) => setFirstName(e.target.value.toLowerCase())}
             />
             <button className="edit-button" onClick={(e) => changeName(e)}>
@@ -61,12 +66,6 @@ function HeaderUser() {
             </button>
           </div>
           <div className="edit-lastName">
-            <input
-              type="text"
-              placeholder="Last name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value.toLowerCase())}
-            />
             <button className="edit-button" onClick={(e) => cancel(e)}>
               Cancel
             </button>
