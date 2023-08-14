@@ -14,31 +14,36 @@ function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(false); // Reset error state
-
+  
     if (email.trim() === '' || password.trim() === '') {
       setError(true); // Display error message
     } else {
       // Dispatch loginUser action with email and password
       const loginData = await dispatch(login({ email, password, token: '' }));
-
+      console.log('loginData:', loginData);
+  
       // Assuming loginData.success indicates successful login
-      if (loginData.success) {
-        const token = loginData.token; // Assuming loginData includes the token
-        // Fetch user profile information
+      if (loginData.payload.message === "User successfully logged in") {
+        const token = loginData.payload.body.token;
+        console.log('Dispatching Profile action from SignIn component');
         const profileData = await dispatch(Profile(token));
         
         console.log('profileData success:', profileData.success);
-
+        
+        console.log('profileData success:', profileData.success);
+  
         if (profileData.success) {
           navigate('/profile'); // Redirect to profile page
         } else {
           setError(true); // Handle failure to fetch profile data
         }
       } else {
+        console.log('Login failed');
         setError(true); // Handle login failure here
       }
     }
   };
+  
 
   return (
     <section className="sign-in-content">

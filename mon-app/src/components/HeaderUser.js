@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../redux/action";
+import { updateUser, Profile } from "../redux/action";
 
 function HeaderUser() {
-  const userState = useSelector((state) => state.user); // Access the user state from userSlice
+  const userState = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const [editName, setEditName] = useState(false);
@@ -15,7 +15,12 @@ function HeaderUser() {
   useEffect(() => {
     setFirstName(userState.firstName);
     setLastName(userState.lastName);
-  }, [userState.firstName, userState.lastName]);
+
+    if (userState.isAuthenticated && !userState.connected) {
+      console.log('Dispatching Profile action from HeaderUser component');
+      dispatch(Profile(token));
+    }
+  }, [userState.firstName, userState.lastName, userState.isAuthenticated, userState.connected, dispatch, token]);
 
   const changeName = (e) => {
     e.preventDefault();

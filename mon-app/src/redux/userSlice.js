@@ -27,11 +27,12 @@ const userSlice = createSlice({
         state.isAuthenticated = true;
         state.token = action.payload.body.token;
         state.status = 'connexion';
+        state.connected = true;
         // Use the navigate function to redirect to the profile page
       })
       .addCase(Profile.fulfilled, (state, action) => {
         state.connected = true;
-        state.status = 'connecte';
+        state.status = 'connected';
         state.firstName = action.payload.body.firstName;
         state.lastName = action.payload.body.lastName;
       })
