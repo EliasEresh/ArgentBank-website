@@ -101,6 +101,74 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+    # New transaction-related endpoints under /user/profile path
+    /transactions/transfer:
+      put:
+        security:
+          - Bearer: []
+        tags:
+          - Transaction Module
+        summary: Transfer Money
+        description: API for transferring money between two accounts
+        parameters:
+          - in: body
+            name: body
+            description: Transfer Money Payload
+            required: true
+            schema:
+              $ref: '#/definitions/TransferPayload'
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Money transferred successfully
+            schema:
+              $ref: '#/definitions/ApiResponse'
+          '400':
+            description: Invalid Fields
+          '500':
+            description: Internal Server Error
+
+    /transactions/history:
+      get:
+        security:
+          - Bearer: []
+        tags:
+          - Transaction Module
+        summary: Transaction History
+        description: API for fetching transaction history for an account
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Transaction history retrieved successfully
+            schema:
+              $ref: '#/definitions/ApiResponse'
+          '400':
+            description: Invalid Fields
+          '500':
+            description: Internal Server Error
+
+    /transactions/last:
+      get:
+        security:
+          - Bearer: []
+        tags:
+          - Transaction Module
+        summary: Last Transaction
+        description: API for fetching the last transaction for an account
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Last transaction retrieved successfully
+            schema:
+              $ref: '#/definitions/ApiResponse'
+          '400':
+            description: Invalid Fields
+          '500':
+            description: Internal Server Error
+
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -151,8 +219,15 @@ definitions:
     properties:
       token:
         type: string
-  UserProfile:
+  TransferPayload:
     type: object
     properties:
-      userName:
+      sourceAccount:
         type: string
+        description: Source account number
+      targetAccount:
+        type: string
+        description: Target account number
+      amount:
+        type: number
+        description: Amount to transfer

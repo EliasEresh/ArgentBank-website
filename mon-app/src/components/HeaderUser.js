@@ -7,52 +7,52 @@ function HeaderUser() {
   const dispatch = useDispatch();
 
   const [editName, setEditName] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [userName, setUserName] = useState('');
 
   const token = userState.token;
 
   useEffect(() => {
-    setFirstName(userState.firstName);
-    setLastName(userState.lastName);
+    setUserName(userState.userName); // Set userName from state
 
     if (userState.isAuthenticated && !userState.connected) {
       console.log('Dispatching Profile action from HeaderUser component');
       dispatch(Profile(token));
     }
-  }, [userState.firstName, userState.lastName, userState.isAuthenticated, userState.connected, dispatch, token]);
+  }, [userState.userName, userState.isAuthenticated, userState.connected, dispatch, token]);
 
-  const changeName = (e) => {
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value); // Update userName on input change
+  }
+
+  const changeName = async (e) => {
     e.preventDefault();
-    if (firstName === "" && lastName === "") {
-      setEditName(!editName);
-    } else {
-      dispatch(updateUser({ token, firstName, lastName }));
-      setEditName(!editName);
+    if (userName !== userState.userName) { // Only update if userName changed
+      await dispatch(updateUser({ token, userName }));
     }
+    setEditName(false);
   }
 
   const cancel = (e) => {
     e.preventDefault();
     setEditName(false);
-    setFirstName(userState.firstName);
-    setLastName(userState.lastName);
+    setUserName(userState.userName); // Reset userName to original value
   };
 
   return (
     <div className="header">
       <h1>
         Welcome back<br />
+        {userState.firstName} {userState.lastName} {"!"}
         {userState.isAuthenticated && (
-          <span className={editName ? "sr-only" : " "}>
-            {firstName} {lastName} !
+          <span className={editName ? " " : "sr-only"}>
+            {" "}
           </span>
         )}
       </h1>
       {!editName && userState.isAuthenticated && (
         <button
           className="edit-button"
-          onClick={() => setEditName(!editName)}
+          onClick={() => setEditName(true)}
         >
           Edit Name
         </button>
@@ -62,15 +62,13 @@ function HeaderUser() {
           <div className="edit-firstName">
             <input
               type="text"
-              value={firstName}
+              value={userName} // Display userName in the input field
               placeholder="Username"
-              onChange={(e) => setFirstName(e.target.value.toLowerCase())}
+              onChange={handleUserNameChange} // Call the handler on input change
             />
             <button className="edit-button" onClick={(e) => changeName(e)}>
               Save
             </button>
-          </div>
-          <div className="edit-lastName">
             <button className="edit-button" onClick={(e) => cancel(e)}>
               Cancel
             </button>

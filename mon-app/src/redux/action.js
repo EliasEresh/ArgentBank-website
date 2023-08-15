@@ -55,7 +55,7 @@ export const Profile = createAsyncThunk('user/Profile', async (token) => {
   }
 });
 
-export const updateUser = createAsyncThunk('user/updateUser', async ({ token, firstName, lastName }) => {
+export const updateUser = createAsyncThunk('user/updateUser', async ({ token, firstName, lastName, userName }) => {
   try {
     const response = await fetch('http://localhost:3001/api/v1/user/profile', {
       method: 'PUT',
@@ -63,7 +63,7 @@ export const updateUser = createAsyncThunk('user/updateUser', async ({ token, fi
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify({ firstName, lastName }),
+      body: JSON.stringify({ firstName, lastName, userName }),
     });
 
     if (!response.ok) {

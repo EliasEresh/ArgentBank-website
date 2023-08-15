@@ -10,6 +10,7 @@ function Header() {
   const firstName = useSelector(state => state.user.firstName);
 
   const handleLogout = () => {
+    console.log("Logging out...");
     dispatch(logoutUser());
   };
 

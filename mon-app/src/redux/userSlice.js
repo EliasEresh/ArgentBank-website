@@ -15,6 +15,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logoutUser: (state) => {
+      console.log("Logging out in reducer...");
       state.isAuthenticated = false;
       state.token = '';
       state.firstName = '';
@@ -39,6 +40,7 @@ const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         state.firstName = action.payload.body.firstName;
         state.lastName = action.payload.body.lastName;
+        state.userName = action.payload.body.userName;
       });
   },
 });

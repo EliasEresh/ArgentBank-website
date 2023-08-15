@@ -27,12 +27,12 @@ function SignIn() {
         const token = loginData.payload.body.token;
         console.log('Dispatching Profile action from SignIn component');
         const profileData = await dispatch(Profile(token));
-        
-        console.log('profileData success:', profileData.success);
-        
+        console.log('profileData:', profileData);
+                
         console.log('profileData success:', profileData.success);
   
-        if (profileData.success) {
+        if (profileData.payload.status === 200) {
+          console.log('Navigating to /profile');
           navigate('/profile'); // Redirect to profile page
         } else {
           setError(true); // Handle failure to fetch profile data
@@ -43,7 +43,6 @@ function SignIn() {
       }
     }
   };
-  
 
   return (
     <section className="sign-in-content">
