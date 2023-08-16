@@ -5,10 +5,9 @@ import storage from 'redux-persist/lib/storage';
 import userReducer from './redux/userSlice';
 
 const userPersistConfig = {
-  key: 'user', // Key to use for the persisted state
-  storage, // Use the imported storage
+  key: 'user',
+  storage,
   whitelist: ['isAuthenticated', 'token', 'firstName', 'lastName', 'connected', 'status'],
- // List of state keys to persist
 };
 
 const persistedUserReducer = persistReducer(userPersistConfig, userReducer);
@@ -17,9 +16,12 @@ const store = configureStore({
   reducer: {
     user: persistedUserReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // Disable serializable check
+    }).concat(thunk),
 });
 
-const persistor = persistStore(store); // Create the persistor
+const persistor = persistStore(store);
 
-export { store, persistor }; // Export both store and persistor
+export { store, persistor };
