@@ -101,71 +101,86 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-    # New transaction-related endpoints under /user/profile path
-    /transactions/transfer:
-      put:
-        security:
-          - Bearer: []
-        tags:
-          - Transaction Module
-        summary: Transfer Money
-        description: API for transferring money between two accounts
-        parameters:
-          - in: body
-            name: body
-            description: Transfer Money Payload
-            required: true
-            schema:
-              $ref: '#/definitions/TransferPayload'
+    # New transaction-related endpoints
+    /transactions/modify/{transactionId}:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Modify Transaction Information
+      description: API for modifying information of a specific transaction
+      parameters:
+        - in: path
+          name: transactionId
+          description: ID of the transaction to modify
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated transaction information
+          required: true
+          schema:
+            $ref: '#/definitions/ModifiedTransaction'
         produces:
           - application/json
         responses:
           '200':
-            description: Money transferred successfully
+            description: Transaction information modified successfully
             schema:
               $ref: '#/definitions/ApiResponse'
-          '400':
-            description: Invalid Fields
+          '401':
+            description: Unauthorized
+          '404':
+            description: Transaction not found
           '500':
             description: Internal Server Error
 
-    /transactions/history:
-      get:
-        security:
-          - Bearer: []
-        tags:
-          - Transaction Module
-        summary: Transaction History
-        description: API for fetching transaction history for an account
-        produces:
-          - application/json
-        responses:
-          '200':
-            description: Transaction history retrieved successfully
-            schema:
-              $ref: '#/definitions/ApiResponse'
-          '400':
-            description: Invalid Fields
-          '500':
-            description: Internal Server Error
+    /transactions/visualize:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Visualize Transactions for Current Month
+      description: API for visualizing all transactions for the current month, grouped by accounts
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transactions visualized successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
 
-    /transactions/last:
-      get:
-        security:
-          - Bearer: []
-        tags:
-          - Transaction Module
-        summary: Last Transaction
-        description: API for fetching the last transaction for an account
+     /transactions/details/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Transaction Details
+      description: API for fetching details of a specific transaction
+      parameters:
+        - in: path
+          name: transactionId
+          description: ID of the transaction to fetch details for
+          required: true
+          type: string
         produces:
           - application/json
         responses:
           '200':
-            description: Last transaction retrieved successfully
+            description: Transaction details retrieved successfully
             schema:
               $ref: '#/definitions/ApiResponse'
-          '400':
-            description: Invalid Fields
+          '401':
+            description: Unauthorized
+          '404':
+            description: Transaction not found
           '500':
             description: Internal Server Error
 
